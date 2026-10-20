@@ -17,7 +17,7 @@ namespace GymManagementDAL.Entities
         public DateTime EndDate { get; set; }
         #endregion
 
-        #region Relation Sipos
+        #region Relation Ships
 
 
         public int CategoryId { get; set; }
