@@ -11,7 +11,7 @@ namespace GymManagementDAL.Entities
         #region props
         //joinDate => CreatedAt in BaseEntity
 
-        public string Photo { get; set; } = null!;
+        public string? Photo { get; set; } = null!;
         #endregion
 
         #region Relation Ships

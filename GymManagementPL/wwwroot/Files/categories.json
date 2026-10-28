@@ -1,14 +1,14 @@
 [
   {
-    "CategoryName": "GeneralFitness"
+    "Name": "GeneralFitness"
   },
   {
-    "CategoryName": "Yoga"
+    "Name": "Yoga"
   },
   {
-    "CategoryName": "Boxing"
+    "Name": "Boxing"
   },
   {
-    "CategoryName": "CrossFit"
+    "Name": "CrossFit"
   }
 ]

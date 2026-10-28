@@ -1,9 +1,12 @@
 using GymManagementBLL;
+using GymManagementBLL.Services.Classes;
 using GymManagementBLL.Services.Classses;
 using GymManagementBLL.Services.Interfaces;
 using GymManagementDAL.Data.Context;
+using GymManagementDAL.Data.DataSeed;
 using GymManagementDAL.Repositories.Classes;
 using GymManagementDAL.Repositories.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace GymManagementPL
@@ -26,6 +29,10 @@ namespace GymManagementPL
             builder.Services.AddScoped<ISessionRepository, SessionRepository>();
             builder.Services.AddAutoMapper(x => x.AddProfile(new MappingProfiles()));
             builder.Services.AddScoped<IAnaliticService, AnaliticService>();
+            builder.Services.AddScoped<IMemberService, MemberService>();
+            builder.Services.AddScoped<ITrainerService, TrainerService>();
+            builder.Services.AddScoped<IPlanService, PlanService>();
+
 
 
 
@@ -40,6 +47,26 @@ namespace GymManagementPL
 
 
             var app = builder.Build();
+
+
+
+
+            #region Migrate DataBase & Seed Data
+
+            var Scope = app.Services.CreateScope();
+            var dbcontext = Scope.ServiceProvider.GetRequiredService<GYMDbContext>();
+
+            //var UserManager = Scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            //var RoleManager = Scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            var PendingMigrations = dbcontext.Database.GetPendingMigrations();
+            if (PendingMigrations?.Any() ?? false)
+                dbcontext.Database.Migrate();
+
+            GymDbContextSeed.SeedData(dbcontext);
+            //IdentityDbContextSeeding.SeedData(RoleManager, UserManager);
+
+            #endregion
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

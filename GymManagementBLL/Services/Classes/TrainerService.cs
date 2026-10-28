@@ -1,4 +1,5 @@
-﻿using GymManagementBLL.Services.Interfaces;
+﻿using AutoMapper.Execution;
+using GymManagementBLL.Services.Interfaces;
 using GymManagementBLL.ViewModels.TrainerViewModels;
 using GymManagementDAL.Entities;
 using GymManagementDAL.Repositories.Classes;
@@ -137,8 +138,12 @@ namespace GymManagementBLL.Services.Classes
             var Trainer = unitOfWork.GetRepository<Trainer>().GetById(TrainerId);
             if (Trainer is null ) return false;
 
-            if (EmailExist(UpdatedTrainer.Email) || PhoneExist(UpdatedTrainer.Phone) ) return false;
+            var EmailExist = unitOfWork.GetRepository<Trainer>()
+                           .GetAll(x => x.Email == UpdatedTrainer.Email && x.Id != TrainerId);
 
+            var PhoneExist = unitOfWork.GetRepository<Trainer>()
+                .GetAll(x => x.Phone == UpdatedTrainer.Phone && x.Id != TrainerId);
+            if (EmailExist.Any() || PhoneExist.Any()) return false;
             try
             {
                 Trainer.Email = UpdatedTrainer.Email;
