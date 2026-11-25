@@ -23,11 +23,11 @@ namespace GymManagementBLL
                 .ForMember(dest => dest.AvailableSlots, options => options.Ignore());
 
             CreateMap<CreateSessionViewModel, Session>();
+            CreateMap<Trainer, TrainerSelectViewModel>();
+            CreateMap<Category, CategorySelectViewModel>();
 
             CreateMap<Trainer, TrainerSelectViewModel>();
-            CreateMap<Category, CategorySelectViewModel>()
-                .ForMember(dist => dist.Name, opt => opt.MapFrom(src => src.Name));
-
+            CreateMap<Category, CategorySelectViewModel>();
             CreateMap<Session, UpdateSessionViewModel>().ReverseMap();
 
             CreateMap<Plan, PlanViewModel>();

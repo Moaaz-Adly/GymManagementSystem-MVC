@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GymManagementBLL.Services.Interfaces;
+using GymManagementBLL.ViewModels.SessionViewModels;
 using GymManagementDAL.Entities;
 using GymManagementDAL.Repositories.Interfaces;
 using GymManagementSystemBLL.ViewModels.SessionViewModels;
@@ -30,7 +31,7 @@ namespace GymManagementBLL.Services.Classes
                 if (!IsCategoryValid(CreatedSession.CategoryId)) return false;
                 if (!IsTrainerValid(CreatedSession.TrainerId)) return false;
                 if (!IsDateTimeValid(CreatedSession.StartDate, CreatedSession.EndDate)) return false;
-                if (CreatedSession.Capasity > 25 || CreatedSession.Capasity < 0) return false;
+                if (CreatedSession.Capacity > 25 || CreatedSession.Capacity < 0) return false;
 
                 var SessionEntity = mapper.Map<Session>(CreatedSession);
 
@@ -114,7 +115,7 @@ namespace GymManagementBLL.Services.Classes
             try
             {
                 var Session = unitOfWork.SessionRepository.GetById(SessionId);
-                if (IsSessionValidToRemove(Session!)) return false;
+                if (!IsSessionValidToRemove(Session!)) return false;
                 unitOfWork.SessionRepository.Delete(Session!);
                 return unitOfWork.SaveChanges() > 0;
             }
@@ -124,6 +125,21 @@ namespace GymManagementBLL.Services.Classes
                 return false;
             }
         }
+
+
+        public IEnumerable<TrainerSelectViewModel> GetTrainerForDropDown()
+        {
+            var Trainers = unitOfWork.GetRepository<Trainer>().GetAll();
+            return mapper.Map<IEnumerable<TrainerSelectViewModel>>(Trainers);
+        }
+
+        public IEnumerable<CategorySelectViewModel> GetCategoryForDropDown()
+        {
+            var Categorys = unitOfWork.GetRepository<Category>().GetAll();
+            return mapper.Map<IEnumerable<CategorySelectViewModel>>(Categorys);
+        }
+
+
 
 
         #region Helpers
@@ -140,7 +156,7 @@ namespace GymManagementBLL.Services.Classes
 
         private bool IsDateTimeValid(DateTime StartDate , DateTime EndDate)
         {
-            return StartDate < EndDate; 
+            return StartDate < EndDate && DateTime.Now < StartDate; 
         }
 
 

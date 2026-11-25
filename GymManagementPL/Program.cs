@@ -32,24 +32,9 @@ namespace GymManagementPL
             builder.Services.AddScoped<IMemberService, MemberService>();
             builder.Services.AddScoped<ITrainerService, TrainerService>();
             builder.Services.AddScoped<IPlanService, PlanService>();
-
-
-
-
-
-
-
-
-
-
-
-
-
+            builder.Services.AddScoped<ISessionService, SessionServices>();
 
             var app = builder.Build();
-
-
-
 
             #region Migrate DataBase & Seed Data
 
@@ -67,6 +52,8 @@ namespace GymManagementPL
             //IdentityDbContextSeeding.SeedData(RoleManager, UserManager);
 
             #endregion
+
+
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
