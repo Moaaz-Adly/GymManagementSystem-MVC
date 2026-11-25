@@ -31,7 +31,7 @@ namespace GymManagementBLL.Services.Attachment_Service
                 if (!allowedExtention.Contains(Extention)) return null;
 
                 var FolderPath = Path.Combine(webHost.WebRootPath, "images", folderName);
-                if(Directory.Exists(FolderPath))
+                if(!Directory.Exists(FolderPath))
                 {
                     Directory.CreateDirectory(FolderPath);
                 }

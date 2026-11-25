@@ -1,4 +1,5 @@
 using GymManagementBLL;
+using GymManagementBLL.Services.Attachment_Service;
 using GymManagementBLL.Services.Classes;
 using GymManagementBLL.Services.Classses;
 using GymManagementBLL.Services.Interfaces;
@@ -24,7 +25,7 @@ namespace GymManagementPL
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
             //builder.Services.AddScoped(typeof(IGenaricRepository<>) , typeof(GenaricRepository<>));
-            //builder.Services.AddScoped(typeof(IPlanRepository) , typeof(PlanRepository));
+            //builder.Services.AddScoped(typeof(IPlanRepository), typeof(PlanRepository));
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<ISessionRepository, SessionRepository>();
             builder.Services.AddAutoMapper(x => x.AddProfile(new MappingProfiles()));
@@ -33,6 +34,7 @@ namespace GymManagementPL
             builder.Services.AddScoped<ITrainerService, TrainerService>();
             builder.Services.AddScoped<IPlanService, PlanService>();
             builder.Services.AddScoped<ISessionService, SessionServices>();
+            builder.Services.AddScoped<IAttachmentService, AttachmentService>();
 
             var app = builder.Build();
 

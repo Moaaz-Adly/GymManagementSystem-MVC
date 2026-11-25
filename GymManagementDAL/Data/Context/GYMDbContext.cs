@@ -1,4 +1,5 @@
 ﻿using GymManagementDAL.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,20 +10,25 @@ using System.Threading.Tasks;
 
 namespace GymManagementDAL.Data.Context
 {
-    public class GYMDbContext : DbContext
+    public class GYMDbContext : IdentityDbContext<ApplicationUser>
     {
         public GYMDbContext( DbContextOptions<GYMDbContext> options ) : base( options ) 
         {
 
         }
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer("Server = .; Database = GymManagementV02; Trusted_Connection = true ; TrustServerCertificate = true");
-        //}
+       
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.Entity<ApplicationUser>()
+                .Property(x => x.FirstName)
+                .HasColumnType("VARCHAR")
+                .HasMaxLength(50);
+            modelBuilder.Entity<ApplicationUser>()
+                .Property(x => x.LaseName)
+                .HasColumnType("VARCHAR")
+                .HasMaxLength(50);
         }
 
 
