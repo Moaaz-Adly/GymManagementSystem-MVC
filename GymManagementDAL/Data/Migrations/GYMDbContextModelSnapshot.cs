@@ -46,7 +46,7 @@ namespace GymManagementDAL.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("VARCHAR");
 
-                    b.Property<string>("LaseName")
+                    b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("VARCHAR");

@@ -26,7 +26,7 @@ namespace GymManagementDAL.Data.Context
                 .HasColumnType("VARCHAR")
                 .HasMaxLength(50);
             modelBuilder.Entity<ApplicationUser>()
-                .Property(x => x.LaseName)
+                .Property(x => x.LastName)
                 .HasColumnType("VARCHAR")
                 .HasMaxLength(50);
         }

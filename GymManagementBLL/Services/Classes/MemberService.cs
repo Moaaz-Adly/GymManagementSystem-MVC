@@ -109,9 +109,6 @@ namespace GymManagementBLL.Services.Classes
             var Member = unitOfWork.GetRepository<Member>().GetById(MemberId);
             if (Member is null) return false;
 
-
-
-
             var SessionIds = unitOfWork.GetRepository<MemberSession>()
                 .GetAll(x => x.MemberId == MemberId).Select(x => x.SessionId);
 
@@ -119,8 +116,6 @@ namespace GymManagementBLL.Services.Classes
                 .GetAll(x => SessionIds.Contains(x.Id) && x.StartDate > DateTime.Now).Any();
 
             if (HasFutureSession) return false;
-
-
 
             var MemberShips = unitOfWork.GetRepository<MemberShip>().GetAll(x => x.MemberId == MemberId);
             try
